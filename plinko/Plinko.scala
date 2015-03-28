@@ -23,7 +23,7 @@ object Plinko {
     }
   }
 
-  def slotPrize(slot: Int): Int = {
+  def slotPrize(slot: Double): Int = {
     slot match {
       case 0 | 8 => 100
       case 1 | 7 => 500
@@ -55,9 +55,9 @@ object Plinko {
      
   def dropOne = {
     val slot = selectSlot
-    val path = getPath(slot).take(12)
-    println(path.toList.toString)
-    println(slot)
+    val path = getPath(slot).take(13).toList
+    println("The path of the chip is: " + path.mkString("[ ", ", ", " ]"))
+    println("The winnings are: $" + slotPrize(path.last))
   }    
 
   def menu(option: Int): Boolean = {
