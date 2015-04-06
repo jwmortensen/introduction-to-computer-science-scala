@@ -1,3 +1,4 @@
-# Introduction to Computer Science in Scala
+# Learn Scala
 
-I am rewriting the c++ projects I did for my introduction to computer science class in scala.
+I am working to learn scala and to understand the functional proramming paradigm. This repository contains code for some of
+the projects from my introductory CS courses, rewritten in scala.

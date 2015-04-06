@@ -1,8 +1,9 @@
 import scala.io.StdIn
+import car.Car
 
 object CarInventory {
   var balance = 10000.0;
-  var inventory 
+  var inventory = List[Car]()
   val actionMap = Map[Int, () => Boolean](
     1 -> currentInventory, 
     2 -> currentBalance,
@@ -29,14 +30,36 @@ object CarInventory {
   }
 
   def currentInventory(): Boolean = {
+    val size = inventory.length
+    if (size == 1) 
+      println("1 car in inventory")
+    else 
+      println(size + " cars in inventory")
+    for (car <- inventory) car.print
     return true
   }
 
   def currentBalance(): Boolean = {
+    printf("Current Balance: $%.2f\n", balance)
     return true
   }
 
   def buyCar(): Boolean = {
+    println("Please enter information about the car:")
+    println("Name:")
+    val name = StdIn.readLine
+    println("Color:")
+    val color = StdIn.readLine
+    println("Price:")
+    val price = StdIn.readDouble
+    if (price > balance) {
+      println("Insufficient Funds.")
+    }
+    else {
+      balance -= price
+      inventory =  new Car(name, color, price) :: inventory
+    }
+      
     return true
   }
 
