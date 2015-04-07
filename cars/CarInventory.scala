@@ -39,13 +39,13 @@ object CarInventory {
     else 
       println(size + " cars in inventory")
     for (car <- inventory) car.print
-    return true
+    true
   }
 
   /** returns true. prints current cash balance. **/
   def currentBalance(): Boolean = {
     printf("Current Balance: $%.2f\n", balance)
-    return true
+    true
   }
 
   /** returns true. if the price of the new car is less than balance, 
@@ -68,15 +68,21 @@ object CarInventory {
       balance -= price
       inventory =  new Car(name, color, price) :: inventory
     }
-    return true
+    true
   }
 
   def sellCar(): Boolean = {
     println("Vehicle name:")
     val name = StdIn.readLine
-    // Figure out how to remove car from inventory and add 
-    // its sell price to balance.
-    return true
+    val removeIndex = inventory.indexWhere(_.name == name)
+    if (removeIndex != -1) {
+      balance += inventory(removeIndex).price
+      inventory = inventory.patch(removeIndex, Nil, 1)
+    }
+    else {
+      println("Invalid name.")
+    }
+    true
   }
 
   def paintCar(): Boolean = {
@@ -86,19 +92,19 @@ object CarInventory {
     val color = StdIn.readLine
     val car = inventory.filter(_.name == name).head
     car.paint(color)
-    return true
+    true
   }
 
   def loadFile(): Boolean = {
-    return true
+    true
   }
 
   def saveFile(): Boolean = {
-    return true
+    true
   }
 
   def quit(): Boolean = {
-    return false
+    false
   }
 
   def menu(option: Int): Boolean = {
