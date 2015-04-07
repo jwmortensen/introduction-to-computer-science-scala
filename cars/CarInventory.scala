@@ -1,3 +1,5 @@
+import java.io._
+import scala.io.Source
 import scala.io.StdIn
 import car.Car
 
@@ -71,6 +73,7 @@ object CarInventory {
     true
   }
 
+  /** returns true. removes specified car from inventory and adds its price to balance. **/
   def sellCar(): Boolean = {
     println("Vehicle name:")
     val name = StdIn.readLine
@@ -85,6 +88,11 @@ object CarInventory {
     true
   }
 
+  /** returns true. 
+    * 
+    * User specifies paint color and car to paint. Car color is changed in inventory,
+    * and the price of the car is increased by $1,000
+    */
   def paintCar(): Boolean = {
     println("Vehicle name:")
     val name = StdIn.readLine
@@ -95,11 +103,32 @@ object CarInventory {
     true
   }
 
+  /** returns true
+    * 
+    * The user specifies a file, and then money is added to the balance
+    * and cars are added to the inventory
+    */
   def loadFile(): Boolean = {
+    println("Enter filename:")
+    val filename = StdIn.readLine
+    for (line <- Source.fromFile(filename).getLines())
+      if (line.charAt(0).isDigit) 
+        balance += line.toDouble
+      else {
+        val carData = line.split(" ")
+        inventory = new Car(carData(0), carData(1), carData(2).toDouble) :: inventory
+      }
     true
   }
 
   def saveFile(): Boolean = {
+    println("Enter filename:")
+    val filename = StdIn.readLine
+    val pw = new PrintWriter(new File(filename))
+    pw.write(balance.toString + "\n")
+    for (car <- inventory)    
+      pw.write(car.name + " " + car.color + " " + car.price + "\n")
+    pw.close
     true
   }
 
